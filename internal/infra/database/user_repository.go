@@ -6,16 +6,18 @@ import (
 	"time"
 
 	"github.com/Ryan-18-system/autenticaPB/internal/dto"
+	"github.com/Ryan-18-system/autenticaPB/internal/entity"
 	"github.com/Ryan-18-system/autenticaPB/pkg/handlerException"
 )
 
 type UserRepositoryInterface interface {
 	FindUserByCPF(cpf string) (*dto.UserImputDTO, error)
-	Create(entidade dto.UserImputDTO) error
-	Update(entidade dto.UserImputDTO) error
-	Delete(entidade dto.UserImputDTO) error
-	FindAll() ([]dto.UserImputDTO, error)
-	FindByID(id string) (*dto.UserImputDTO, error)
+	Create(entidada *entity.User) error
+	Update(entidade *entity.User) error
+	DeleteByCPF(cpf string) error
+	FindAll() ([]entity.User, error)
+	FindByID(id string) (*entity.User, error)
+	FindByCpf(cpf string) (*entity.User, error)
 }
 type UserRepository struct {
 	DataBase *sql.DB
@@ -28,8 +30,8 @@ func NewUserRepository() *UserRepository {
 func (u *UserRepository) FindUserByCPF(cpf string) (*dto.UserImputDTO, error) {
 	return nil, nil
 }
-func (u *UserRepository) Create(entidade dto.UserImputDTO) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
+func (u *UserRepository) Create(entidade *entity.User) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Millisecond)
 	defer cancel()
 	tx, err := u.DataBase.BeginTx(ctx, nil)
 	if err != nil {
@@ -53,15 +55,18 @@ func (u *UserRepository) Create(entidade dto.UserImputDTO) error {
 	}
 	return nil
 }
-func (u *UserRepository) Update(entidade dto.UserImputDTO) error {
+func (u *UserRepository) Update(entidade *entity.User) error {
 	return nil
 }
-func (u *UserRepository) Delete(entidade dto.UserImputDTO) error {
+func (u *UserRepository) DeleteByCPF(cpf string) error {
 	return nil
 }
-func (u *UserRepository) FindAll() ([]dto.UserImputDTO, error) {
+func (u *UserRepository) FindAll() ([]entity.User, error) {
 	return nil, nil
 }
-func (u *UserRepository) FindByID(id string) (*dto.UserImputDTO, error) {
+func (u *UserRepository) FindByID(id string) (*entity.User, error) {
+	return nil, nil
+}
+func (u *UserRepository) FindByCpf(cpf string) (*entity.User, error) {
 	return nil, nil
 }

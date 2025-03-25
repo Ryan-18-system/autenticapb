@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/Ryan-18-system/autenticaPB/internal/dto"
+	"github.com/Ryan-18-system/autenticaPB/internal/entity"
 	"github.com/Ryan-18-system/autenticaPB/internal/infra/database"
 )
 
@@ -24,7 +25,11 @@ func (u *UserService) Login(username, password string) (string, error) {
 	return "", nil
 }
 func (u *UserService) CreateUser(userDto dto.UserImputDTO) error {
-	err := u.UserRepository.Create(userDto)
+	newUser, err := entity.NewUser(userDto.Username, userDto.Password, userDto.Email, userDto.Nome, userDto.CPF)
+	if err != nil {
+		return err
+	}
+	err = u.UserRepository.Create(newUser)
 	return err
 }
 func (u *UserService) UpdateUser(userDto dto.UserImputDTO) error {
